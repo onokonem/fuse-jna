@@ -1,5 +1,8 @@
 package net.fusejna;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.sun.jna.NativeLong;
 import com.sun.jna.Structure;
 
@@ -13,8 +16,15 @@ public class StructTimespec extends Structure
 	{
 	}
 
+	public static final List<String> FIELD_ORDER = Arrays.asList("tv_sec", "tv_nsec");
 	public NativeLong tv_sec;
 	public NativeLong tv_nsec;
+
+	@Override
+	protected List<String> getFieldOrder()
+	{
+		return FIELD_ORDER;
+	}
 
 	public final long nsec()
 	{

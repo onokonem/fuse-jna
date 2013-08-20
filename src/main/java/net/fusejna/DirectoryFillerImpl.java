@@ -10,7 +10,10 @@ import net.fusejna.types.TypeOff;
 import com.sun.jna.Function;
 import com.sun.jna.Pointer;
 
-public final class DirectoryFiller
+/**
+ * A class which provides functionality to pass filenames back to FUSE as part of a readdir() call.
+ */
+public final class DirectoryFillerImpl implements DirectoryFiller
 {
 	private static final String currentDirectory = ".";
 	private static final String parentDirectory = "..";
@@ -18,13 +21,17 @@ public final class DirectoryFiller
 	private final Function nativeFunction;
 	private final Set<String> addedFiles = new HashSet<String>();
 
-	DirectoryFiller(final Pointer buf, final Function nativeFunction)
+	DirectoryFillerImpl(final Pointer buf, final Function nativeFunction)
 	{
 		this.buf = buf;
 		this.nativeFunction = nativeFunction;
 		add(currentDirectory, parentDirectory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public final boolean add(final Iterable<String> files)
 	{
 		int result;
@@ -46,11 +53,18 @@ public final class DirectoryFiller
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public final boolean add(final String... files)
 	{
 		return add(Arrays.asList(files));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString()
 	{

@@ -1,5 +1,8 @@
 package net.fusejna;
 
+import java.util.Arrays;
+import java.util.List;
+
 import net.fusejna.types.TypeBlkCnt;
 import net.fusejna.types.TypeBlkSize;
 import net.fusejna.types.TypeDev;
@@ -14,6 +17,7 @@ import net.fusejna.types.TypeMode.NodeType;
 import net.fusejna.types.TypeNLink;
 import net.fusejna.types.TypeOff;
 import net.fusejna.types.TypeQspare;
+import net.fusejna.types.TypeUInt32;
 import net.fusejna.types.TypeUid;
 
 import com.sun.jna.Structure;
@@ -52,6 +56,8 @@ public abstract class StructStat extends Structure
 		{
 		}
 
+		public static final List<String> FIELD_ORDER = Arrays.asList("st_dev", "st_ino", "st_mode", "st_nlink", "st_uid",
+				"st_gid", "st_rdev", "st_atime", "st_mtime", "st_ctime", "st_size", "st_blocks", "st_blksize");
 		public TypeDev st_dev;
 		public TypeIno st_ino;
 		public TypeMode st_mode;
@@ -65,6 +71,12 @@ public abstract class StructStat extends Structure
 		public TypeOff st_size;
 		public TypeBlkCnt st_blocks;
 		public TypeBlkSize st_blksize;
+
+		@Override
+		protected List<String> getFieldOrder()
+		{
+			return FIELD_ORDER;
+		}
 
 		@Override
 		final void st_atime(final long sec, final long nsec)
@@ -325,9 +337,12 @@ public abstract class StructStat extends Structure
 		{
 		}
 
+		public static final List<String> FIELD_ORDER = Arrays.asList("st_dev", "__pad1", "__st_ino", "st_mode", "st_nlink",
+				"st_uid", "st_gid", "st_rdev", "__pad2", "st_size", "st_blksize", "st_blocks", "st_atime", "st_mtime",
+				"st_ctime", "st_ino");
 		public TypeDev st_dev;
-		public short __pad0;
-		public TypeIno __pad1;
+		public short __pad1;
+		public TypeUInt32 __st_ino;
 		public TypeMode st_mode;
 		public TypeNLink st_nlink;
 		public TypeUid st_uid;
@@ -341,6 +356,12 @@ public abstract class StructStat extends Structure
 		public StructTimespec.ByValue st_mtime;
 		public StructTimespec.ByValue st_ctime;
 		public TypeIno st_ino;
+
+		@Override
+		protected List<String> getFieldOrder()
+		{
+			return FIELD_ORDER;
+		}
 
 		@Override
 		final void st_atime(final long sec, final long nsec)
@@ -581,6 +602,9 @@ public abstract class StructStat extends Structure
 		{
 		}
 
+		public static final List<String> FIELD_ORDER = Arrays.asList("st_dev", "st_mode", "st_nlink", "st_ino", "st_uid",
+				"st_gid", "st_rdev", "st_atime", "st_mtime", "st_ctime", "st_birthtime", "st_size", "st_blocks", "st_blksize",
+				"st_gen", "st_lspare", "st_qspare");
 		public TypeDev st_dev;
 		public TypeMode st_mode;
 		public TypeNLink st_nlink;
@@ -618,6 +642,12 @@ public abstract class StructStat extends Structure
 		        +" blocks="    +st_blocks.toString()
 		        ;
 		  };
+
+		@Override
+		protected List<String> getFieldOrder()
+		{
+			return FIELD_ORDER;
+		}
 
 		@Override
 		final void st_atime(final long sec, final long nsec)
@@ -878,6 +908,8 @@ public abstract class StructStat extends Structure
 		{
 		}
 
+		public static final List<String> FIELD_ORDER = Arrays.asList("st_dev", "st_ino", "st_mode", "st_nlink", "st_uid",
+				"st_gid", "st_rdev", "__pad0", "st_size", "st_blksize", "st_blocks", "st_atime", "st_mtime", "st_ctime");
 		public TypeDev st_dev;
 		public TypeIno st_ino;
 		public TypeMode st_mode;
@@ -892,6 +924,12 @@ public abstract class StructStat extends Structure
 		public StructTimespec.ByValue st_atime;
 		public StructTimespec.ByValue st_mtime;
 		public StructTimespec.ByValue st_ctime;
+
+		@Override
+		protected List<String> getFieldOrder()
+		{
+			return FIELD_ORDER;
+		}
 
 		@Override
 		final void st_atime(final long sec, final long nsec)
@@ -1227,7 +1265,7 @@ public abstract class StructStat extends Structure
 
 		public final StatWrapper mtime(final long sec, final long nsec)
 		{
-			structStat.st_atime(sec, nsec);
+			structStat.st_mtime(sec, nsec);
 			return this;
 		}
 
@@ -1312,8 +1350,8 @@ public abstract class StructStat extends Structure
 				final long birthtime_nsec)
 		{
 			structStat.st_atime(atime_sec, atime_nsec);
-			structStat.st_mtime(mtime_sec, atime_nsec);
-			structStat.st_ctime(ctime_sec, atime_nsec);
+			structStat.st_mtime(mtime_sec, mtime_nsec);
+			structStat.st_ctime(ctime_sec, ctime_nsec);
 			structStat.st_birthtime(birthtime_sec, birthtime_nsec);
 			return this;
 		}
@@ -1385,6 +1423,8 @@ public abstract class StructStat extends Structure
 		{
 		}
 
+		public static final List<String> FIELD_ORDER = Arrays.asList("st_dev", "st_ino", "st_nlink", "st_mode", "st_uid",
+				"st_gid", "__pad0", "st_rdev", "st_size", "st_blksize", "st_blocks", "st_atime", "st_mtime", "st_ctime");
 		public TypeDev st_dev;
 		public TypeIno st_ino;
 		public TypeNLink st_nlink;
@@ -1399,6 +1439,12 @@ public abstract class StructStat extends Structure
 		public StructTimespec.ByValue st_atime;
 		public StructTimespec.ByValue st_mtime;
 		public StructTimespec.ByValue st_ctime;
+
+		@Override
+		protected List<String> getFieldOrder()
+		{
+			return FIELD_ORDER;
+		}
 
 		@Override
 		final void st_atime(final long sec, final long nsec)

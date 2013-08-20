@@ -1,5 +1,8 @@
 package net.fusejna;
 
+import java.util.Arrays;
+import java.util.List;
+
 import net.fusejna.types.TypeDev;
 import net.fusejna.types.TypeGid;
 import net.fusejna.types.TypeMode;
@@ -30,6 +33,11 @@ public class StructFuseOperations extends Structure
 		}
 	}
 
+	public static final List<String> FIELD_ORDER = Arrays
+			.asList("getattr", "readlink", "getdir", "mknod", "mkdir", "unlink", "rmdir", "symlink", "rename", "link", "chmod",
+					"chown", "truncate", "utime", "open", "read", "write", "statfs", "flush", "release", "fsync", "setxattr",
+					"getxattr", "listxattr", "removexattr", "opendir", "readdir", "releasedir", "fsyncdir", "init", "destroy",
+					"access", "create", "ftruncate", "fgetattr", "lock", "utimens", "bmap");
 	public Callback getattr;
 	public Callback readlink;
 	public Pointer getdir = null;
@@ -296,9 +304,9 @@ public class StructFuseOperations extends Structure
 		};
 		fsync = new Callback()
 		{
-			public final int callback(final String path, final StructFuseFileInfo.ByReference info)
+			public final int callback(final String path, final int datasync, final StructFuseFileInfo.ByReference info)
 			{
-				return filesystem._fsync(path, info);
+				return filesystem._fsync(path, datasync, info);
 			}
 		};
 		switch (Platform.platform()) {
@@ -376,9 +384,9 @@ public class StructFuseOperations extends Structure
 		};
 		fsyncdir = new Callback()
 		{
-			public final int callback(final String path, final StructFuseFileInfo.ByReference info)
+			public final int callback(final String path, final int datasync, final StructFuseFileInfo.ByReference info)
 			{
-				return filesystem._fsyncdir(path, info);
+				return filesystem._fsyncdir(path, datasync, info);
 			}
 		};
 		init = new Callback()
@@ -454,5 +462,11 @@ public class StructFuseOperations extends Structure
 				return filesystem._bmap(path, info);
 			}
 		};
+	}
+
+	@Override
+	protected List<String> getFieldOrder()
+	{
+		return FIELD_ORDER;
 	}
 }

@@ -1,5 +1,8 @@
 package net.fusejna;
 
+import java.util.Arrays;
+import java.util.List;
+
 import net.fusejna.types.TypeGid;
 import net.fusejna.types.TypePid;
 import net.fusejna.types.TypeUid;
@@ -17,9 +20,16 @@ public abstract class StructFuseContext extends Structure
 	{
 	}
 
+	public static final List<String> FIELD_ORDER = Arrays.asList("fuse", "uid", "gid", "pid", "private_data");
 	public Pointer fuse;
 	public TypeUid uid;
 	public TypeGid gid;
 	public TypePid pid;
 	public Pointer private_data;
+
+	@Override
+	protected List<String> getFieldOrder()
+	{
+		return FIELD_ORDER;
+	}
 }

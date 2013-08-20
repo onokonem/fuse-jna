@@ -1,5 +1,8 @@
 package net.fusejna;
 
+import java.util.Arrays;
+import java.util.List;
+
 import net.fusejna.types.TypeBlkCnt;
 import net.fusejna.types.TypeFsFilCnt;
 
@@ -18,6 +21,8 @@ public abstract class StructStatvfs extends Structure
 		{
 		}
 
+		public static final List<String> FIELD_ORDER = Arrays.asList("f_bavail", "f_bfree", "f_blocks", "f_ffree", "f_favail",
+				"f_files", "f_bsize", "__pad0", "f_frsize");
 		public TypeBlkCnt f_bavail;
 		public TypeBlkCnt f_bfree;
 		public TypeBlkCnt f_blocks;
@@ -123,6 +128,12 @@ public abstract class StructStatvfs extends Structure
 		{
 			this.f_frsize.setValue(f_frsize);
 		}
+
+		@Override
+		protected List<String> getFieldOrder()
+		{
+			return FIELD_ORDER;
+		}
 	}
 
 	public static class NotFreeBSD extends StructStatvfs
@@ -135,6 +146,8 @@ public abstract class StructStatvfs extends Structure
 		{
 		}
 
+		public static final List<String> FIELD_ORDER = Arrays.asList("f_bsize", "f_frsize", "f_blocks", "f_bfree", "f_bavail",
+				"f_files", "f_ffree", "f_favail");
 		public NativeLong f_bsize;
 		public NativeLong f_frsize;
 		public TypeBlkCnt f_blocks;
@@ -238,6 +251,12 @@ public abstract class StructStatvfs extends Structure
 		final void f_frsize(final long f_frsize)
 		{
 			this.f_frsize.setValue(f_frsize);
+		}
+
+		@Override
+		protected List<String> getFieldOrder()
+		{
+			return FIELD_ORDER;
 		}
 	}
 

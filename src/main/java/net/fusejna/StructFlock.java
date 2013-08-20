@@ -1,5 +1,8 @@
 package net.fusejna;
 
+import java.util.Arrays;
+import java.util.List;
+
 import net.fusejna.types.TypeOff;
 import net.fusejna.types.TypePid;
 
@@ -154,12 +157,20 @@ public abstract class StructFlock extends Structure
 		{
 		}
 
+		public static final List<String> FIELD_ORDER = Arrays.asList("l_start", "l_len", "l_pid", "l_type", "l_whence",
+				"l_sysid");
 		public TypeOff l_start;
 		public TypeOff l_len;
 		public TypePid l_pid;
 		public short l_type;
 		public short l_whence;
 		public int l_sysid;
+
+		@Override
+		protected List<String> getFieldOrder()
+		{
+			return FIELD_ORDER;
+		}
 
 		@Override
 		final long l_len()
@@ -244,11 +255,18 @@ public abstract class StructFlock extends Structure
 		{
 		}
 
+		public static final List<String> FIELD_ORDER = Arrays.asList("l_type", "l_whence", "l_start", "l_len", "l_pid");
 		public short l_type;
 		public short l_whence;
 		public TypeOff l_start;
 		public TypeOff l_len;
 		public TypePid l_pid;
+
+		@Override
+		protected List<String> getFieldOrder()
+		{
+			return FIELD_ORDER;
+		}
 
 		@Override
 		final long l_len()

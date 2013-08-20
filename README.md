@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/EtiennePerot/fuse-jna.png)](https://travis-ci.org/EtiennePerot/fuse-jna)
+
 ## The straight dope
 #### Grab it
 
@@ -42,6 +44,13 @@ Following [fuse.py], fuse-jna should work with:
 * OS X with [MacFUSE]/[fuse4x]/[OSXFUSE] on Intel architectures
 * Linux with [FUSE][Linux-Fuse] on Intel and PowerPC architectures
 * FreeBSD with [FUSE][FreeBSD-Fuse] on Intel architectures
+
+#### Projects using fuse-jna
+
+* [JGitFS](https://github.com/centic9/JGitFS): Displays Git branches, tags and commits as files
+* [GithubFS](https://github.com/akiellor/githubfs): Expose GitHub issues as files
+
+Feel free to [open an issue](https://github.com/EtiennePerot/fuse-jna/issues/new) to get your project added here.
 
 #### Licensing
 fuse-jna is licensed under the [BSD 2-Clause License].

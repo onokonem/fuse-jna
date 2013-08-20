@@ -12,16 +12,9 @@ import net.fusejna.StructFuseFileInfo.FileInfoWrapper;
 import net.fusejna.StructStat.StatWrapper;
 import net.fusejna.StructStatvfs.StatvfsWrapper;
 import net.fusejna.StructTimeBuffer.TimeBufferWrapper;
-import net.fusejna.types.TypeDev;
-import net.fusejna.types.TypeGid;
-import net.fusejna.types.TypeMode;
+import net.fusejna.types.*;
 import net.fusejna.types.TypeMode.ModeWrapper;
 import net.fusejna.types.TypeMode.NodeType;
-import net.fusejna.types.TypeOff;
-import net.fusejna.types.TypePid;
-import net.fusejna.types.TypeSize;
-import net.fusejna.types.TypeUInt32;
-import net.fusejna.types.TypeUid;
 
 import com.sun.jna.Function;
 import com.sun.jna.Pointer;
@@ -104,16 +97,16 @@ public abstract class FuseFilesystem
 	}
 
 	@FuseMethod
-	final int _fsync(final String path, final StructFuseFileInfo info)
+	final int _fsync(final String path, final int datasync, final StructFuseFileInfo info)
 	{
-		return fsync(path, new FileInfoWrapper(path, info));
+		return fsync(path, datasync, new FileInfoWrapper(path, info));
 	}
 
 	@FuseMethod
-	final int _fsyncdir(final String path, final StructFuseFileInfo info)
+	final int _fsyncdir(final String path, final int datasync, final StructFuseFileInfo info)
 	{
 		final FileInfoWrapper wrapper = new FileInfoWrapper(path, info);
-		final int result = fsyncdir(path, wrapper);
+		final int result = fsyncdir(path, datasync, wrapper);
 		wrapper.write();
 		return result;
 	}
@@ -232,7 +225,7 @@ public abstract class FuseFilesystem
 	final int _readdir(final String path, final Pointer buf, final Pointer fillFunction, final TypeOff offset,
 			final StructFuseFileInfo info)
 	{
-		return readdir(path, new DirectoryFiller(buf, Function.getFunction(fillFunction)));
+		return readdir(path, new DirectoryFillerImpl(buf, Function.getFunction(fillFunction)));
 	}
 
 	@FuseMethod
@@ -376,10 +369,10 @@ public abstract class FuseFilesystem
 	public abstract int flush(final String path, final FileInfoWrapper info);
 
 	@UserMethod
-	public abstract int fsync(final String path, final FileInfoWrapper info);
+	public abstract int fsync(final String path, int datasync, final FileInfoWrapper info);
 
 	@UserMethod
-	public abstract int fsyncdir(final String path, final FileInfoWrapper info);
+	public abstract int fsyncdir(final String path, int datasync, final FileInfoWrapper info);
 
 	@UserMethod
 	public abstract int ftruncate(final String path, final long offset, final FileInfoWrapper info);
